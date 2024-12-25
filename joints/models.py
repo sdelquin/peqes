@@ -5,9 +5,10 @@ from django.conf import settings
 from django.db import models
 
 
-class URL(models.Model):
-    target_url = models.URLField()
-    shorten_url = models.CharField(max_length=256)
+class Joint(models.Model):
+    target_url = models.URLField(unique=True)
+    shorten_url = models.CharField(unique=True, max_length=256)
+    hits = models.PositiveBigIntegerField(default=0)
 
     class Meta:
         indexes = [models.Index(fields=['target_url', 'shorten_url'])]
