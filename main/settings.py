@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ymo)8pfjs)bu3r!dl3s*yqbo(436pjo5(yu7esf*@^m!l00j@q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=config.boolean)
 
 ALLOWED_HOSTS = []
 
@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', default='peqes'),
+        'USER': config('DB_USERNAME', default='db_username'),
+        'PASSWORD': config('DB_PASSWORD', default='db_password'),
+        'HOST': config('DB_HOST', default='localhost'),
     }
 }
 

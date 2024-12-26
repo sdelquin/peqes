@@ -8,30 +8,30 @@ pip-cmd := shell('if [ -x "$(command -v uv)" ]; then echo "uv pip"; else echo "p
 # ==============================================================================
 
 # Launch development server
-runserver: check-venv
+runserver: check-venv postgres
     ./manage.py runserver
 
 # Launch Django interactive shell
-sh: check-venv
+sh: check-venv postgres
     ./manage.py shell
 
 alias mm := makemigrations
 # Make Django migrations
-makemigrations: check-venv
+makemigrations: check-venv postgres
     ./manage.py makemigrations
     
 alias m := migrate
 # Apply Django migrations
-migrate: check-venv
+migrate: check-venv postgres
     ./manage.py migrate
 
 alias c := check
 # Check if Django project is correct
-check: check-venv
+check: check-venv postgres
     ./manage.py check
 
 # Add a new app and install it on settings.py
-startapp app: check-venv
+startapp app: check-venv postgres
     #!/usr/bin/env bash
     python manage.py startapp {{ app }}
     APP_CLASS={{ app }}
@@ -86,7 +86,7 @@ setup: install-reqs && migrate create-su
     echo "✔ Fixed TIME_ZONE='Atlantic/Canary' and LANGUAGE_CODE='es-es'"
 
 # Create a superuser (or update it if already exists)
-create-su username="admin" password="admin" email="admin@example.com":
+create-su username="admin" password="admin" email="admin@example.com": postgres
     #!/usr/bin/env bash
     ./manage.py shell -c '
     from django.contrib.auth.models import User
@@ -103,11 +103,17 @@ create-su username="admin" password="admin" email="admin@example.com":
 # https://stackoverflow.com/a/76300128
 # Remove migrations and database. Reset DB artefacts.
 [confirm("⚠️ All migrations and database will be removed. Continue? [yN]:")]
-reset-db: && create-su
+reset-db: postgres && create-su
     #!/usr/bin/env bash
     find . -path "*/migrations/*.py" ! -path "./.venv/*" ! -name "__init__.py" -delete
     find . -path "*/migrations/*.pyc" ! -path "./.venv/*" -delete
-    rm -f db.sqlite3
+    psql << EOF
+        DROP DATABASE peqes;
+        CREATE DATABASE peqes;
+        GRANT ALL PRIVILEGES ON DATABASE peqes TO peqes_user;
+        \c peqes
+        GRANT ALL ON SCHEMA public TO peqes_user;
+    EOF
     ./manage.py makemigrations
     ./manage.py migrate
     echo
@@ -131,6 +137,18 @@ enable-vscode-pytest:
       "python.testing.pytestEnabled": true
     }
     EOF
+
+# Start postgresql server
+[private]
+postgres:
+    #!/usr/bin/env bash
+    if [[ $(grep -i postgres $(find . -name settings.py)) ]]; then
+        if   [[ $OSTYPE == "linux-gnu"* ]]; then
+            pgrep -x postgres &> /dev/null || sudo service postgresql start
+        elif [[ $OSTYPE == "darwin"* ]]; then
+            pgrep -x postgres &> /dev/null || (open /Applications/Postgres.app && sleep 2)
+        fi
+    fi
 
 # Start redis server
 [private]
