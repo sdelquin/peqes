@@ -126,6 +126,16 @@ rq: check-venv redis
 # MISC RECIPES
 # ==============================================================================
 
+# Deploy project to production
+deploy:
+    #!/usr/bin/env bash
+    source .venv/bin/activate
+    git pull
+    pip install -r requirements.txt
+    python manage.py migrate
+    python manage.py collectstatic --no-input
+    supervisorctl restart peqes
+
 # Enable testing with pytest inside VSCode
 enable-vscode-pytest:
     #!/usr/bin/env bash
