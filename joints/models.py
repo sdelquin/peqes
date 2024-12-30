@@ -12,6 +12,7 @@ class Joint(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     expires_at = models.DateTimeField(blank=True, null=True)
+    tags = models.ManyToManyField('tags.Tag', related_name='joints', blank=True)
 
     class Meta:
         indexes = [models.Index(fields=['target_url', 'shorten_url'])]

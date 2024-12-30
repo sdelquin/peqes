@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'joints.apps.JointsConfig',
     'shared.apps.SharedConfig',
+    'tags.apps.TagsConfig',
 ]
 
 MIDDLEWARE = [
