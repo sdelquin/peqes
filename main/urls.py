@@ -18,8 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+import shared.views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__reload__/', include('django_browser_reload.urls')),
+    path('404/', shared.views.custom_404),
     path('', include('joints.urls')),
 ]
+
+handler404 = 'shared.views.custom_404'
