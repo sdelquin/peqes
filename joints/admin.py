@@ -5,4 +5,4 @@ from .models import Joint
 
 @admin.register(Joint)
 class JointAdmin(admin.ModelAdmin):
-    list_display = ('target_url', 'shorten_url', 'hits')
+    list_display = ('target_url', 'shorten_url', 'hits', 'expires_at')
