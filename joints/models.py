@@ -20,7 +20,7 @@ class Joint(models.Model):
     def save(self, *args, **kwargs):
         if not self.is_url(self.shorten_url):
             self.shorten_url = self.urlify(self.shorten_url)
-        self.shorten_url = self.shorten_url.rstrip('/')
+        self.shorten_url = self.shorten_url.lower().rstrip('/')
         super().save(*args, **kwargs)
 
     def __str__(self):
