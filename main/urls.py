@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('__reload__/', include('django_browser_reload.urls')),
     path('404/', shared.views.custom_404),
+    path('404/test/', shared.views.test_404),
     path('', include('joints.urls')),
 ]
 
