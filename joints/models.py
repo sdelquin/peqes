@@ -17,6 +17,7 @@ class Joint(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=['target_url', 'shorten_url'])]
+        ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
         if not self.is_url(self.shorten_url):
@@ -34,3 +35,7 @@ class Joint(models.Model):
     @staticmethod
     def urlify(path: str, base_url: str = settings.SHORTEN_BASE_URL) -> str:
         return urljoin(base_url, path)
+
+    @property
+    def shorten_path(self) -> str:
+        return f'/{self.shorten_url.split("/")[-1]}'
