@@ -3,6 +3,9 @@ from urllib.parse import urljoin
 
 from django.conf import settings
 from django.db import models
+from django.db.utils import IntegrityError
+
+from . import utils
 
 
 class Joint(models.Model):
@@ -14,16 +17,28 @@ class Joint(models.Model):
     expires_at = models.DateTimeField(blank=True, null=True)
     description = models.TextField(blank=True)
     tags = models.ManyToManyField('tags.Tag', related_name='joints', blank=True)
+    custom = models.BooleanField(default=True)
 
     class Meta:
         indexes = [models.Index(fields=['target_url', 'shorten_url'])]
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-        if not self.is_url(self.shorten_url):
-            self.shorten_url = self.urlify(self.shorten_url)
-        self.shorten_url = self.shorten_url.lower().rstrip('/')
-        super().save(*args, **kwargs)
+        if self.shorten_url:
+            if not self.is_url(self.shorten_url):
+                self.shorten_url = self.urlify(self.shorten_url)
+            self.shorten_url = self.shorten_url.lower().rstrip('/')
+            super().save(*args, **kwargs)
+        else:
+            # Generate a random shorten url
+            while True:
+                try:
+                    self.shorten_url = self.urlify(utils.base36_uuid())
+                    self.custom = False
+                    super().save(*args, **kwargs)
+                    break
+                except IntegrityError:
+                    continue
 
     def __str__(self):
         return self.shorten_url

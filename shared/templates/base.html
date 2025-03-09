@@ -1,0 +1,33 @@
+{% load static %}
+{% load shared_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" type="image/png" href="{% hashed_static 'images/favicon.png' %}">
+
+  <link rel="stylesheet" href="{% hashed_static 'bulma/css/bulma.min.css' %}">
+
+  <title>{% block title %}peq.es{% endblock %}</title>
+</head>
+
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-body">
+        <p class="title">peq.es</p>
+        <p class="subtitle">Tus URLs de siempre, pero pequeñas.</p>
+      </div>
+    </section>
+    <div class="columns">
+      <div class="column is-6 mx-auto">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

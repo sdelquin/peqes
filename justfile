@@ -132,6 +132,7 @@ deploy:
     source .venv/bin/activate
     git pull
     pip install -r requirements.txt
+    npm install
     python manage.py migrate
     python manage.py collectstatic --no-input
     supervisorctl restart peqes

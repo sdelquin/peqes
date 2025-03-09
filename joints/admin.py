@@ -11,6 +11,6 @@ def test_url(obj):
 @admin.register(Joint)
 class JointAdmin(admin.ModelAdmin):
     search_fields = ('target_url', 'shorten_url', 'description')
-    list_display = ('shorten_path', 'description', 'target_url', test_url)
-    list_filter = ('tags', 'expires_at')
+    list_display = ('shorten_path', 'description', 'target_url', test_url, 'custom')
+    list_filter = ('tags', 'expires_at', 'custom')
     filter_horizontal = ('tags',)

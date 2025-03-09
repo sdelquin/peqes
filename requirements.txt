@@ -2,3 +2,4 @@ django==5.1.4
 psycopg2==2.9.10
 prettyconf==2.2.1
 django-browser-reload==1.17.0
+crispy-bulma==0.11.0

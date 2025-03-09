@@ -33,13 +33,18 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=config.list)
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-party apps
     'django_browser_reload',
+    'crispy_forms',
+    'crispy_bulma',
+    # Custom apps
     'joints.apps.JointsConfig',
     'shared.apps.SharedConfig',
     'tags.apps.TagsConfig',
@@ -127,6 +132,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = config('STATIC_ROOT', default=BASE_DIR / 'static', cast=Path)
+STATICFILES_DIRS = [BASE_DIR / 'node_modules']
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = config('MEDIA_ROOT', default=BASE_DIR / 'media', cast=Path)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -134,3 +143,8 @@ STATIC_ROOT = config('STATIC_ROOT', default=BASE_DIR / 'static', cast=Path)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SHORTEN_BASE_URL = config('SHORTEN_BASE_URL')
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bulma',)
+CRISPY_TEMPLATE_PACK = 'bulma'
+
+SHORTEN_HEX_LEN = config('SHORTEN_HEX_LEN', default=6, cast=int)
