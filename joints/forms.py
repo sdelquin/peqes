@@ -1,6 +1,6 @@
-from crispy_bulma.layout import Div, Field
+from crispy_bulma.layout import HTML, Div, Field
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
+from crispy_forms.layout import Layout
 from django import forms
 
 from .models import Joint
@@ -26,7 +26,9 @@ class AddJointForm(forms.Form):
                     css_class='control is-expanded',
                 ),
                 Div(
-                    Submit('submit', 'Acortar', css_class='button is-primary'),
+                    HTML(
+                        '<button type="submit" class="button is-primary"><i class="fa-solid fa-compress mr-1"></i> Acortar</button>'
+                    ),
                     css_class='control',
                 ),
                 css_class='field has-addons',
