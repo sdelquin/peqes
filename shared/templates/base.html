@@ -18,24 +18,43 @@
 </head>
 
 <body>
-  <div class="container">
-    <section class="hero">
-      <div class="hero-body">
-        <p class="title">
-          peq.es
-          <span class="icon"><i class="fa fa-paperclip"></i></span>
-        </p>
-        <p class="subtitle">Tus URLs de siempre, pero pequeñas.</p>
-      </div>
-    </section>
-    <div class="columns is-centered">
-      <div class="column is-6">
-        {% block content %}{% endblock %}
-      </div>
+
+  <section class="hero has-text-centered">
+    <div class="hero-body">
+      <p class="title">
+        peq.es
+        <span class="icon"><i class="fa fa-paperclip"></i></span>
+      </p>
+      <p class="subtitle">Tus URLs de siempre, pero pequeñas.</p>
+    </div>
+  </section>
+
+  <div class="columns is-centered is-mobile">
+    <div class="column is-6-desktop is-10-mobile">
+      {% block content %}{% endblock %}
     </div>
   </div>
-</body>
 
-<script type="text/javascript" src="{% hashed_static 'js/base.js' %}"></script>
+  <article class="message is-info is-size-7" id="disclaimer">
+    <div class="message-header">
+      <p><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</p>
+      <button class="delete" aria-label="delete"></button>
+    </div>
+    <div class="message-body has-text-justified">
+      Este proyecto está desarrollado a título particular sin ninguna organización/empresa detrás que lo respalde. No se garantiza la disponibilidad de los servicios ofrecidos ni la integridad de los datos almacenados. Se recomienda no utilizar este servicio para almacenar información sensible o crítica.
+    </div>
+  </article>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        Hecho con <i class="fa-solid fa-heart"></i> por <a href="https://sdelquin.me">Sergio Delgado Quintero</a>.
+      </p>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="{% hashed_static 'js/base.js' %}"></script>
+
+</body>
 
 </html>
