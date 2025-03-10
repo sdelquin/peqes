@@ -8,4 +8,21 @@
   <div class="box mt-6 is-family-monospace has-text-weight-bold is-size-4">{{ joint.shorten_url }}</div>
   <div class="is-size-7"><a href="{% url 'joints:shorten' %}" class="is-primary">Acortar otra...</a></div>
 {% endif %}
+
+<article class="message is-size-7" id="disclaimer">
+  <div class="message-header">
+    <p><i class="fa-solid fa-triangle-exclamation"></i> Aviso</p>
+    <button class="delete" aria-label="delete"></button>
+  </div>
+  <div class="message-body has-text-justified">
+    <p class="mb-4">
+      Este proyecto está desarrollado a título personal sin ninguna organización/empresa detrás que lo respalde. No se garantiza la disponibilidad de los servicios ofrecidos ni la integridad de los datos almacenados. Se recomienda no utilizar este servicio para almacenar información sensible o crítica.
+    </p>
+
+    <p>
+      <i class="fa-solid fa-copyright"></i> 2025 <a href="https://sdelquin.me" target="_blank">Sergio Delgado Quintero</a>
+    </p>
+  </div>
+</article>
+
 {% endblock %}
