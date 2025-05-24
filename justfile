@@ -1,37 +1,40 @@
 project := file_stem(justfile_dir())
-venv-name := ".venv"
-venv-path := join(justfile_dir(), venv-name)
-pip-cmd := shell('if [ -x "$(command -v uv)" ]; then echo "uv pip"; else echo "pip"; fi')
 
 # ==============================================================================
 # DJANGO RECIPES
 # ==============================================================================
 
 # Launch development server
-runserver: check-venv postgres
-    ./manage.py runserver
+[macos]
+run: postgres
+    uv run ./manage.py runserver
+
+# Run program in production mode
+[linux]
+run: postgres
+    uv run gunicorn -b unix:/tmp/peqes.sock main.wsgi:application
 
 # Launch Django interactive shell
-sh: check-venv postgres
+sh: postgres
     ./manage.py shell
 
 alias mm := makemigrations
 # Make Django migrations
-makemigrations: check-venv postgres
+makemigrations: postgres
     ./manage.py makemigrations
     
 alias m := migrate
 # Apply Django migrations
-migrate: check-venv postgres
+migrate: postgres
     ./manage.py migrate
 
 alias c := check
 # Check if Django project is correct
-check: check-venv postgres
+check: postgres
     ./manage.py check
 
 # Add a new app and install it on settings.py
-startapp app: check-venv postgres
+startapp app: postgres
     #!/usr/bin/env bash
     python manage.py startapp {{ app }}
     APP_CLASS={{ app }}
@@ -40,46 +43,25 @@ startapp app: check-venv postgres
     echo "✔ {{ app }} installed & added to settings.INSTALLED_APPS"
 
 # ==============================================================================
-# VIRTUALENV RECIPES
+# UV RECIPES
 # ==============================================================================
 
-# Create a Python virtualenv
-create-venv:
-    #!/usr/bin/env bash
-    if [ ! -d {{ venv-name }} ]
-    then
-        if [ -x "$(command -v uv)" ]
-        then
-            uv venv --seed
-        else
-            python -m venv {{ venv-name }} --prompt {{ project }}
-        fi
-    fi
+# Sync uv
+[macos]
+sync:
+    uv sync --no-group prod
 
-# Check if Python virtualenv is activated
-[private]
-[no-exit-message]
-check-venv: create-venv
-    #!/usr/bin/env bash
-    if [ "$VIRTUAL_ENV" != "{{ venv-path }}" ]; then
-        echo Project virtualenv: {{ venv-path }}
-        echo Active virtualenv: $VIRTUAL_ENV
-        echo
-        echo You must activate the right virtualenv!
-        exit 1
-    fi
-
-alias i := install-reqs
-# Install project requirements
-install-reqs: check-venv
-    {{ pip-cmd }} install -r requirements.txt
+# Sync uv
+[linux]
+sync:
+    uv sync --no-dev --group prod
 
 # ==============================================================================
 # DJANGO AUX RECIPES
 # ==============================================================================
 
 # Setup a Django project
-setup: install-reqs && migrate create-su
+setup: sync && migrate create-su
     #!/usr/bin/env bash
     django-admin startproject main .
     sed -i -E "s/(TIME_ZONE).*/\1 = 'Atlantic\/Canary'/" ./main/settings.py
@@ -119,7 +101,7 @@ reset-db: postgres && create-su
     echo
 
 # Launch worker for Redis Queue (RQ)
-rq: check-venv redis
+rq: redis
     ./manage.py rqworker
 
 # ==============================================================================
@@ -129,12 +111,11 @@ rq: check-venv redis
 # Deploy project to production
 deploy:
     #!/usr/bin/env bash
-    source .venv/bin/activate
     git pull
-    pip install -r requirements.txt
+    just sync
     npm install
-    python manage.py migrate
-    python manage.py collectstatic --no-input
+    uv run python manage.py migrate
+    uv run python manage.py collectstatic --no-input
     supervisorctl restart peqes
 
 # Enable testing with pytest inside VSCode
