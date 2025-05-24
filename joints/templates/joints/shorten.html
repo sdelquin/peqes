@@ -1,12 +1,5 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 
 {% block content %}
-{% crispy form %}
-
-{% if joint %}
-  <div class="box mt-6 is-family-monospace has-text-weight-bold is-size-4">{{ joint.shorten_url }}</div>
-  <div class="is-size-7"><a href="{% url 'joints:shorten' %}" class="is-primary">Acortar otra...</a></div>
-{% endif %}
-
+{% include "joints/partials/shorten_form.html" %}
 {% endblock %}

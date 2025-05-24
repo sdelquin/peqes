@@ -9,7 +9,7 @@ from . import utils
 
 
 class Joint(models.Model):
-    target_url = models.URLField(unique=True)
+    target_url = models.URLField(unique=True, max_length=2048)
     shorten_url = models.CharField(unique=True, max_length=256)
     hits = models.PositiveBigIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

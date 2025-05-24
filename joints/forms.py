@@ -2,6 +2,7 @@ from crispy_bulma.layout import HTML, Div, Field
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
 from django import forms
+from django.urls import reverse
 
 from .models import Joint
 
@@ -13,6 +14,9 @@ class AddJointForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['target_url'].label = False
         self.helper = FormHelper()
+        self.helper.attrs = {
+            'hx-post': reverse('joints:shorten'),
+        }
         self.helper.layout = Layout(
             Div(
                 Div(

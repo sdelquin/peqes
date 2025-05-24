@@ -15,7 +15,5 @@ def plugin(request, *args, **kwargs):
 def shorten(request):
     if (form := AddJointForm(request.POST or None)).is_valid():
         joint = form.save()
-        print(form.helper.layout)
-        form.fields['target_url'].widget.attrs['readonly'] = True
-        return render(request, 'joints/shorten.html', {'form': form, 'joint': joint})
+        return render(request, 'joints/partials/shorten_result.html', {'joint': joint})
     return render(request, 'joints/shorten.html', {'form': form})
