@@ -25,3 +25,8 @@ article.message {
   word-wrap: break-word;
   white-space: normal;
 }
+
+img.heading {
+  width: 12rem;
+  height: auto;
+}

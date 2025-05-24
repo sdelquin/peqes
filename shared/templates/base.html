@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- <link rel="shortcut icon" type="image/png" href="{% hashed_static 'images/favicon.png' %}"> -->
+  <link rel="shortcut icon" type="image/png" href="{% hashed_static 'images/favicon.png' %}">
 
   <link rel="stylesheet" href="{% hashed_static 'bulma/css/bulma.min.css' %}">
   <link rel="stylesheet" href="{% hashed_static '@fortawesome/fontawesome-free/css/all.min.css' %}">
@@ -22,8 +22,7 @@
   <section class="hero has-text-centered">
     <div class="hero-body">
       <p class="title">
-        peq.es
-        <span class="icon"><i class="fa fa-paperclip"></i></span>
+        <img src="{% hashed_static 'images/heading.png' %}" alt="Heading Image" class="heading">
       </p>
       <p class="subtitle">Tus URLs de siempre, pero pequeñas.</p>
     </div>
