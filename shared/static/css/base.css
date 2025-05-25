@@ -30,3 +30,24 @@ img.heading {
   width: 12rem;
   height: auto;
 }
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+span#copyURL i {
+  cursor: pointer;
+  margin-left: 0.5rem;
+
+  &:hover {
+    opacity: 100%;
+  }
+}
