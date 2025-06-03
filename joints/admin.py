@@ -11,7 +11,7 @@ def test_url(obj):
 
 
 @admin.display(description='Target URL')
-def target_url_truncate(obj, max_length=200):
+def target_url_truncate(obj, max_length=100):
     return truncatechars(obj.target_url, max_length)
 
 
