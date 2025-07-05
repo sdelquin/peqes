@@ -1,0 +1,51 @@
+{% extends "docs/base.html" %}
+
+{% block content %}
+<div class="title">API</div>
+<div class="subtitle">Documentación</div>
+
+<p>
+Se ofrece una API que permite acortar URLs largas para que sean más fáciles de compartir y manejar. Al enviar una URL, se genera un enlace corto que redirige al original. Es útil para reducir el tamaño de los enlaces en mensajes, correos o redes sociales.
+</p>
+
+<div class="title is-4 mt-5">Versión 1.0</div>
+
+<div class="columns">
+  <div class="column is-half">
+    <div class="is-size-5">Petición</div>
+
+    <table class="table is-bordered">
+      <tr>
+        <th>URL</th> <td><code>https://peq.es/api/v1/shorten</code></td>
+      </tr>
+      <tr>
+        <th>Método</th> <td><code>POST</code></td>
+      </tr>
+      <tr>
+        <th>Body<br>JSON</th> <td><pre>{
+  "target_url": "https://verylargeurl.com"
+}</pre></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="column is-half">
+    <div class="is-size-5">Respuesta</div>
+
+    <table class="table is-bordered">
+      <tr>
+        <th>Body<br>JSON</th> <td><pre>{
+  "shorten_url": "https://peq.es/2bfa1c",
+  "target_url": "https://verylargeurl.com",
+  "hits": 0,
+  "created_at": "2025-07-05T09:11:10.464126+00:00",
+  "updated_at": "2025-07-05T09:11:10.464146+00:00",
+  "expires_at": null
+}</pre></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+{% endblock %}

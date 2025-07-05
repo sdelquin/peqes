@@ -16,6 +16,7 @@ class AddJointForm(forms.Form):
         self.helper = FormHelper()
         self.helper.attrs = {
             'hx-post': reverse('joints:shorten'),
+            'hx-target': '#form-result',
         }
         self.helper.layout = Layout(
             Div(

@@ -19,38 +19,9 @@
 
 <body>
 
-  <section class="hero has-text-centered">
-    <div class="hero-body">
-      <p class="title">
-        <a href="/"><img src="{% hashed_static 'images/heading.png' %}" alt="Heading Image" class="heading"></a>
-      </p>
-      <p class="subtitle">Tus URLs de siempre, pero pequeñas.</p>
-    </div>
-  </section>
-
-  <div class="columns is-centered is-mobile has-text-centered">
-    <div class="column is-6-desktop is-10-mobile">
-      {% block content %}{% endblock %}
-    </div>
-  </div>
-
-  <article class="message is-info is-size-7" id="disclaimer">
-    <div class="message-header">
-      <p><i class="fa-solid fa-triangle-exclamation"></i> Disclaimer</p>
-      <button class="delete" aria-label="delete"></button>
-    </div>
-    <div class="message-body has-text-justified">
-      Este proyecto está desarrollado a título particular sin ninguna organización/empresa detrás que lo respalde. No se garantiza la disponibilidad de los servicios ofrecidos ni la integridad de los datos almacenados. Se recomienda no utilizar este servicio para almacenar información sensible o crítica.
-    </div>
-  </article>
-
-  <footer class="footer">
-    <div class="content has-text-centered">
-      <p>
-        Hecho con <i class="fa-solid fa-heart"></i> por <a href="https://sdelquin.matraka.es">Sergio Delgado Quintero</a>.
-      </p>
-    </div>
-  </footer>
+  {% include "includes/header.html" %}
+  {% block main %}{% endblock %}
+  {% include "includes/footer.html" %}
 
   <script type="text/javascript" src="{% hashed_static 'htmx.org/dist/htmx.min.js' %}"></script>
 

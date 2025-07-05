@@ -1,2 +1,7 @@
 {% load crispy_forms_tags %}
-{% crispy form %}
+{% load shared_extras %}
+
+<div id="form-result">
+  {% crispy form %}
+  <img src="{% hashed_static 'images/network.png' %}" alt="Network" class="mt-6 alpha">
+</div>

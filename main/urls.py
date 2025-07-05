@@ -26,6 +26,7 @@ urlpatterns = [
     path('404/', shared.views.custom_404),
     path('404/test/', shared.views.test_404),
     path('api/', include('api.urls')),
+    path('docs/', include('docs.urls')),
     path('', include('joints.urls')),
 ]
 

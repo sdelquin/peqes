@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'shared.apps.SharedConfig',
     'tags.apps.TagsConfig',
     'api.apps.ApiConfig',
+    'docs.apps.DocsConfig',
 ]
 
 MIDDLEWARE = [
