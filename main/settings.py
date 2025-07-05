@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'joints.apps.JointsConfig',
     'shared.apps.SharedConfig',
     'tags.apps.TagsConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [

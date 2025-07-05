@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 from urllib.parse import urljoin
 
@@ -54,3 +56,8 @@ class Joint(models.Model):
     @property
     def shorten_path(self) -> str:
         return f'/{self.shorten_url.split("/")[-1]}'
+
+    @staticmethod
+    def add_joint(target_url: str) -> Joint:
+        joint, _ = Joint.objects.get_or_create(target_url=target_url)
+        return joint

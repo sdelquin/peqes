@@ -16,27 +16,27 @@ run: postgres
 
 # Launch Django interactive shell
 sh: postgres
-    ./manage.py shell
+    uv run ./manage.py shell
 
 alias mm := makemigrations
 # Make Django migrations
 makemigrations: postgres
-    ./manage.py makemigrations
+    uv run ./manage.py makemigrations
     
 alias m := migrate
 # Apply Django migrations
 migrate: postgres
-    ./manage.py migrate
+    uv run ./manage.py migrate
 
 alias c := check
 # Check if Django project is correct
 check: postgres
-    ./manage.py check
+    uv run ./manage.py check
 
 # Add a new app and install it on settings.py
 startapp app: postgres
     #!/usr/bin/env bash
-    python manage.py startapp {{ app }}
+    uv run ./manage.py startapp {{ app }}
     APP_CLASS={{ app }}
     APP_CONFIG="{{ app }}.apps.${APP_CLASS^}Config"
     perl -0pi -e "s/(INSTALLED_APPS *= *\[)(.*?)(\])/\1\2    '$APP_CONFIG',\n\3/smg" ./main/settings.py
@@ -70,7 +70,7 @@ setup: sync && migrate create-su
 # Create a superuser (or update it if already exists)
 create-su username="admin" password="admin" email="admin@example.com": postgres
     #!/usr/bin/env bash
-    ./manage.py shell -c '
+    uv run ./manage.py shell -c '
     from django.contrib.auth.models import User
     user, _ = User.objects.get_or_create(username="{{ username }}")
     user.email = "{{ email }}"
@@ -96,13 +96,13 @@ reset-db: postgres && create-su
         \c peqes
         GRANT ALL ON SCHEMA public TO peqes_user;
     EOF
-    ./manage.py makemigrations
-    ./manage.py migrate
+    uv run ./manage.py makemigrations
+    uv run ./manage.py migrate
     echo
 
 # Launch worker for Redis Queue (RQ)
 rq: redis
-    ./manage.py rqworker
+    uv run ./manage.py rqworker
 
 # ==============================================================================
 # MISC RECIPES

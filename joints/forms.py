@@ -40,5 +40,4 @@ class AddJointForm(forms.Form):
         )
 
     def save(self, *args, **kwargs):
-        joint, _ = Joint.objects.get_or_create(target_url=self.cleaned_data['target_url'])
-        return joint
+        return Joint.add_joint(self.cleaned_data['target_url'])
