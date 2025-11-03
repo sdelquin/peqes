@@ -153,3 +153,12 @@ redis:
             pgrep -x Redis &> /dev/null || (open /Applications/Redis.app && sleep 2)
         fi
     fi
+
+# Generate random secret key
+[group('production')]
+secret-key:
+    #!/usr/bin/env bash
+    uv run manage.py shell -v0 -c '
+    from django.core.management.utils import get_random_secret_key
+    print(get_random_secret_key())
+    '

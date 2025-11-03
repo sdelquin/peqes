@@ -23,7 +23,7 @@ PROJECT_NAME = BASE_DIR.name
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ymo)8pfjs)bu3r!dl3s*yqbo(436pjo5(yu7esf*@^m!l00j@q'
+SECRET_KEY = config('SECRET_KEY', default='your-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=config.boolean)
